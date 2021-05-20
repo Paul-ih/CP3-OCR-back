@@ -3,6 +3,20 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
+//
+// MONGODB
+
+const mongoose = require("mongoose");
+
+mongoose
+  .connect(
+    "mongodb+srv://paul:<Cqb#L89uvc.xB@_>@cluster0.aleua.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log("Connexion à MongoDB réussie !"))
+  .catch(() => console.log("Connexion à MongoDB échouée !"));
+
+//
 // MIDDLEWARES vvv
 
 // MIDDLEWARE GENERAL (sans route),
@@ -25,8 +39,8 @@ app.use(bodyParser.json());
 app.post("/api/stuff", (req, res, next) => {
   console.log(req.body);
   res.status(201).json({
-    message: 'Objet créé !'
-  })
+    message: "Objet créé !",
+  });
 });
 
 app.use("/api/stuff", (req, res, next) => {
