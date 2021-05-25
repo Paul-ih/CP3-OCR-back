@@ -1,16 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-
+const mongoose = require("mongoose");
 const app = express();
 
 //
-// MONGODB
-
-const mongoose = require("mongoose");
+// MONGODB ATLAS
 
 mongoose
   .connect(
-    "mongodb+srv://paul:<Cqb#L89uvc.xB@_>@cluster0.aleua.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongodb+srv://paul:h39bW3OuLF2u9EkQ@cluster0.aleua.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => console.log("Connexion à MongoDB réussie !"))
