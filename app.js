@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const app = express();
 
 const stuffRoutes = require("./routes/stuff");
+const userRoutes = require("./routes/user");
 
 //
 // MONGODB ATLAS
@@ -36,9 +37,10 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// RENVOI VERS le ROUTER STUFF.js
+// CREATION API & RENVOI VERS le ROUTER pour STUFF et USER
 
 app.use("/api/stuff", stuffRoutes);
+app.use("/api/auth", userRoutes);
 
 // MIDDLEWARES ^^^
 
