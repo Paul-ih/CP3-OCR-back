@@ -32,7 +32,11 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: "TOKEN",
+            token: jwt.sign(
+              { userId: user._id },
+              "RANDOM_TOKEN_SECRET_$2b$10$505aWNvcnc10vMBAz2/ZpONj/z4P9CsajVZ3KjkXdFTdNKJOfQ/pu",
+              { expiresIn: "24h" }
+            ),
           });
         })
         .catch((error) => res.status(500).json({ error }));
