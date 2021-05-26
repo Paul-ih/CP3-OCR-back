@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-// RENVOI CRUD VERS ROUTER STUFF
+// RENVOI du CRUD VERS le ROUTER STUFF.js
 
 app.use("/api/stuff", stuffRoutes);
 
