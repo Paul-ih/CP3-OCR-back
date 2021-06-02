@@ -1,14 +1,17 @@
 const Thing = require("../models/Thing");
 
+// req.body.thing = objet JS sous forme de chaîne de caractères
+// => faut transformer req.body.thing transformer en objet, thingObject
 exports.createThing = (req, res, next) => {
-  delete req.body._id;
+  const thingObject = JSON.parse(req.body.thing);
+  delete thingObject._id;
   const thing = new Thing({
-    ...req.body,
+    ...thingObject,
+    imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
   });
-  thing
-    .save()
-    .then(() => res.status(201).json({ message: "Objet enregistré !" }))
-    .catch((error) => res.status(400).json({ error }));
+  thing.save()
+    .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    .catch(error => res.status(400).json({ error }));
 };
 
 exports.modifyThing = (req, res, next) => {

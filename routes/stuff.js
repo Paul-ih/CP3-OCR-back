@@ -7,13 +7,16 @@ const stuffCtrl = require("../controllers/stuff");
 // MIDDLEWARE D'AUTHENTIFICATION
 const auth = require("../middleware/auth");
 
-// CRÉER, MODIFIER, SUPPRIMER, LIRE 1, LIRE TOUS OBJETS
+// MIDDLEWARE POUR UPLOAD IMAGE
+const multer = require("../middleware/multer-config");
 
-router.post("/", auth, stuffCtrl.createThing);
+// CRÉER, MODIFIER, SUPPRIMER, LIRE 1, LIRE TOUS OBJETS
+// ! pas d'auth vérification pour GET, pas nécessaire ?
+
+router.get("/", stuffCtrl.getAllThings);
+router.post("/", auth, multer, stuffCtrl.createThing);
 router.put("/:id", auth, stuffCtrl.modifyThing);
 router.delete("/:id", auth, stuffCtrl.deleteThing);
-// ! auth vérification aussi pour le get, pas nécessaire ?
 router.get("/:id", stuffCtrl.getOneThing);
-router.get("/", stuffCtrl.getAllThings);
 
 module.exports = router;
