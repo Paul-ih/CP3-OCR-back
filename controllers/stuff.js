@@ -1,4 +1,6 @@
 const Thing = require("../models/Thing");
+// fs = file system, accéder au dossier images
+const fs = require("fs");
 
 // req.body.thing = objet JS sous forme de chaîne de caractères
 // => faut transformer req.body.thing transformer en objet, thingObject
@@ -34,10 +36,18 @@ exports.modifyThing = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+// unlink = supprimer un fichier du server (après avoir récupéré url)
 exports.deleteThing = (req, res, next) => {
-  Thing.deleteOne({ _id: req.params.id })
-    .then(() => res.status(200).json({ message: "Objet supprimé !" }))
-    .catch((error) => res.status(400).json({ error }));
+  Thing.findOne({ _id: req.params.id })
+    .then((thing) => {
+      const filename = thing.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        Thing.deleteOne({ _id: req.params.id })
+          .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+          .catch((error) => res.status(400).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }));
 };
 
 exports.getOneThing = (req, res, next) => {
